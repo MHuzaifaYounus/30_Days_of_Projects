@@ -1,27 +1,28 @@
 "use client"
 import { useState, useEffect, useRef, ChangeEvent } from "react"
+import Image from "next/image"
 
 export default function StopWatch() {
     const inputRef = useRef()
     const timeRef = useRef<NodeJS.Timeout | null>(null)
-    let [duration, setDuration] = useState<number | string>()
-    let [timerValue, setTimerValue] = useState<number>(0)
-    let [isRunning, setIsRunning] = useState<boolean>(false)
-    let [isPause, setIsPause] = useState<boolean>(false)
-    let startBtnRef = useRef()
-    let pauseBtnRef = useRef()
-    let audioRef = useRef()
-    let alarmImgRef = useRef()
-    let startbtn = startBtnRef.current as HTMLButtonElement
-    let pausebtn = pauseBtnRef.current as HTMLButtonElement
+    const [duration, setDuration] = useState<number | string>()
+    const [timerValue, setTimerValue] = useState<number>(0)
+    const [isRunning, setIsRunning] = useState<boolean>(false)
+    const [isPause, setIsPause] = useState<boolean>(false)
+    const startBtnRef = useRef()
+    const pauseBtnRef = useRef()
+    const audioRef = useRef()
+    const alarmImgRef = useRef()
+    const startbtn = startBtnRef.current as HTMLButtonElement
+    const pausebtn = pauseBtnRef.current as HTMLButtonElement
 
     function handleDuration(e: ChangeEvent<HTMLInputElement>): void {
         setDuration(Number(e.target.value) || "")
     }
     function formatTime(time: number): string {
-        let hour = Math.floor(time / 3600);
-        let minutes = Math.floor((time % 3600) / 60);
-        let seconds = time % 60;
+        const hour = Math.floor(time / 3600);
+        const minutes = Math.floor((time % 3600) / 60);
+        const seconds = time % 60;
         return `${hour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
     }
 
@@ -65,8 +66,8 @@ export default function StopWatch() {
         }
     }
     function startAlarm() {
-        let audioSrc = audioRef.current as HTMLAudioElement
-        let alarmImg = alarmImgRef.current as HTMLElement
+        const audioSrc = audioRef.current as HTMLAudioElement
+        const alarmImg = alarmImgRef.current as HTMLElement
         audioSrc.play()
         alarmImg.classList.remove("hidden")
     }
@@ -93,7 +94,13 @@ export default function StopWatch() {
 
     return <div className="flex relative flex-col items-center h-96 w-full max-sm:h-3/4  md:custom-width bg-gray-950 m-auto mt-80 max-sm:border-none max-sm:mt-4 rounded-lg border ">
         <div ref={alarmImgRef} className="h-full hidden filter backdrop-blur absolute top-0 left-0 w-full animate-ping">
-            <img className="filter invert h-full w-full" src="/static/alarm.svg" alt="not found" />
+            <Image
+                src={"/static/alarm.svg"}
+                width={100}
+                height={100}
+                alt="not found"
+                className="filter invert h-full w-full"
+            />
         </div>
         <h1 className="text-center p-3 max-sm:text-3xl max-sm:pb-9 font-bold text-2xl">Countdown Timer App</h1>
         <div className="w-full flex justify-around max-sm:flex-col max-sm:items-center sm:w-3/4">
