@@ -1,4 +1,4 @@
-import Main from '@/app/weather-widget'
+import Main from './weather-widget'
 
 export default function Home() {
   return (

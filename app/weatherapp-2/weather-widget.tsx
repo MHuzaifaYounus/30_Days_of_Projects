@@ -1,5 +1,5 @@
 "use client"
-import { ChangeEvent, MouseEventHandler, useRef, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -95,15 +95,15 @@ export default function Main() {
             return `Night at ${location}`
         }
     }
-    return <Card className='w-[700px] max-md:w-full pb-2 m-auto mt-60 border-black rounded-xl'>
+    return <Card className='w-[700px] max-md:w-full pb-2 m-auto mt-60 border-white rounded-xl'>
         <CardHeader>
             <CardTitle className='text-4xl font-mono text-center'>Weather App</CardTitle>
             <CardDescription className='text-xl font-mono text-center'>Made By Huzaifa</CardDescription>
         </CardHeader>
         <CardContent className='max-sm:w-full p-2'>
             <div className='flex justify-around max-sm:flex-col'>
-                <Input onChange={changeQueryHandler} className='w-[80%] max-sm:w-full max-sm:mb-3' type='text' name='city' placeholder='Enter Your City Here'></Input>
-                <Button onClick={searchHandler}>Search</Button>
+                <Input onChange={changeQueryHandler} className='w-[80%] rounded max-sm:w-full max-sm:mb-3' type='text' name='city' placeholder='Enter Your City Here'></Input>
+                <Button className='bg-white font-bold hover:text-white hover:border text-black rounded' onClick={searchHandler}>Search</Button>
             </div>
             {isdata && (<div className='w-[95%] mt-8 max-sm:w-full flex justify-center max-sm:justify-between items-center flex-col m-auto'>
                 <div className='w-[100%] h-10 mt-2 flex max-sm:h-[5rem] items-center'>
