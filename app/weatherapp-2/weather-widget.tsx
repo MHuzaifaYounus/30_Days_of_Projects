@@ -15,7 +15,8 @@ export default function Main() {
     const [timeMsg, setTimeMsg] = useState<string>('')
     const [errMsg, setErrMsg] = useState<string>('')
     const [isdata, setIsdata] = useState<boolean>(false)
-    const url = `http://api.weatherapi.com/v1/current.json?key=${api}&q=${query}&aqi=yes`
+    const url = `https://api.weatherapi.com/v1/current.json?key=${api}&q=${query}&aqi=yes`
+    
 
     async function getData() {
         const res = await fetch(url)
