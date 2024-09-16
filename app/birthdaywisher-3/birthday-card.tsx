@@ -1,8 +1,8 @@
 "use client"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button"
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useState } from "react";
+import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { FaBirthdayCake, FaGift } from 'react-icons/fa'
 import { GiBalloons } from 'react-icons/gi'
@@ -20,8 +20,6 @@ export default function BirthdayCard() {
     const [windowSize, setWindowSize] = useState<ConfettiProps>({ width: 0, height: 0 })
     const totalcandles = 7
     const totalBallons = 7
-    const candleaudioRef = useRef()
-    const ballonaudioRef = useRef()
     const colors: string[] = ['#eb4034', '#eb9b34', '#e5eb34', '#34eb43', '#34ebe1', '#3464eb', '#c334eb']
     useEffect(() => {
         const handleResize = () => {
@@ -43,7 +41,7 @@ export default function BirthdayCard() {
     }, [candlesLit, ballonsPoped])
 
     function playAudio(src: string): void {
-        let audio = new Audio()
+        const audio = new Audio()
         audio.src = src
         audio.play()
     }
@@ -62,37 +60,37 @@ export default function BirthdayCard() {
 
     }
     function celebrate() {
-         function litAll() {
-            const intervalForCandles =  setInterval(() => {
+        function litAll() {
+            const intervalForCandles = setInterval(() => {
                 setCandlesLit(prev => {
                     if (prev < totalcandles) {
                         playAudio('/static/candlelit.mp3')
                         return prev + 1
                     }
-                    if(prev === totalcandles){
+                    if (prev === totalcandles) {
                         popAll()
                     }
                     clearInterval(intervalForCandles)
                     return prev
                 })
 
-            },300)
-            
+            }, 500)
+
         }
         function popAll() {
-             const intervalForballons = setInterval(() => {
-            setBallonsPoped(prev => {
-                if (prev < totalBallons) {
-                    playAudio('/static/Balloonpop.mp3')
-                    return prev + 1
-                }
-                clearInterval(intervalForballons)
-                return prev
-            })
+            const intervalForballons = setInterval(() => {
+                setBallonsPoped(prev => {
+                    if (prev < totalBallons) {
+                        playAudio('/static/Balloonpop.mp3')
+                        return prev + 1
+                    }
+                    clearInterval(intervalForballons)
+                    return prev
+                })
 
-        }, 300)
+            }, 500)
         }
-        litAll()    
+        litAll()
     }
 
     return <>
@@ -110,21 +108,29 @@ export default function BirthdayCard() {
                     <p className="text-2xl pb-5">Light the Candles: </p>
                     <div className='flex max-sm:w-full max-sm:justify-center'>
                         {[...Array(totalcandles)].map((_, index) => (
-                            (index < candlesLit) ? (
-                                <FaBirthdayCake
-                                    key={index}
-                                    className="w-8 h-8 hover:scale-110 transition-all ml-3 cursor-pointer duration-300 ease-in-out"
-                                    style={{ color: colors[index] }}
-                                    onClick={() => { lightCandle(index) }}
-                                />
-                            ) : (
-                                <FaBirthdayCake
-                                    key={index}
-                                    className="w-8 h-8 hover:scale-110 transition-all ml-3 cursor-pointer duration-300 ease-in-out text-gray-500"
-                                    onClick={() => { lightCandle(index) }}
+                            (index < candlesLit) ?
+                                (
+                                    <motion.div
+                                        key={index}
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        exit={{ scale: 0 }}
+                                        transition={{ duration: 0.5 }}>
 
-                                />
-                            )
+                                        <FaBirthdayCake                                        
+                                            className="w-8 h-8 hover:scale-110 transition-all ml-3 cursor-pointer duration-300 ease-in-out"
+                                            style={{ color: colors[index] }}
+                                            onClick={() => { lightCandle(index) }}
+                                        />
+                                    </motion.div>) : (
+                                    <FaBirthdayCake
+                                        key={index}
+                                        className="w-8 h-8 hover:scale-110 transition-all ml-3 cursor-pointer duration-300 ease-in-out text-gray-500"
+                                        onClick={() => { lightCandle(index) }}
+
+                                    />
+
+                                )
                         ))}
                     </div>
                     <p className="text-2xl pb-5 pt-5">Pop The Ballons: </p>
