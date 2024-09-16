@@ -92,7 +92,7 @@ export default function StopWatch() {
         }
     }, [isPause, isRunning])
 
-    return <div className="flex relative flex-col items-center h-96 w-full max-sm:h-3/4  md:custom-width bg-gray-950 m-auto mt-80 max-sm:border-none max-sm:mt-4 rounded-lg border ">
+    return <div className="flex relative flex-col items-center h-96 w-[600px] max-sm:h-3/4  md:[600px] bg-gray-950 m-auto mt-80 max-sm:border-none max-sm:mt-4 rounded-lg border ">
         <div ref={alarmImgRef} className="h-full hidden filter backdrop-blur absolute top-0 left-0 w-full animate-ping">
             <Image
                 src={"/static/alarm.svg"}

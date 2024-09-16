@@ -98,8 +98,8 @@ export default function Main() {
     }
     return <Card className='w-[700px] max-md:w-full pb-2 m-auto mt-60 border-white rounded-xl'>
         <CardHeader>
-            <CardTitle className='text-4xl font-mono text-center'>Weather App</CardTitle>
-            <CardDescription className='text-xl font-mono text-center'>Made By Huzaifa</CardDescription>
+            <CardTitle className='text-4xl text-center'>Weather App</CardTitle>
+            <CardDescription className='text-xl  text-center'>Made By Huzaifa</CardDescription>
         </CardHeader>
         <CardContent className='max-sm:w-full p-2'>
             <div className='flex justify-around max-sm:flex-col'>
