@@ -28,7 +28,7 @@ export default function CalculatorComp() {
 
 
             if (e.currentTarget.innerText === "+") {
-                setResult(num1 + num2)
+                setResult((parseFloat(num1) + parseFloat(num2)).toString())
             }
             else if (e.currentTarget.innerText === "-") {
                 setResult((parseFloat(num1) - parseFloat(num2)).toString())
