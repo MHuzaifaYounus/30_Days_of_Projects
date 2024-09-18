@@ -63,6 +63,8 @@ export default function CalculatorComp() {
         setResult('')
         input1ref.current.value = ''
         input2ref.current.value = ''
+        setNum1('')
+        setNum2('')
     }
 
     return <Card className='w-[600px] max-sm:w-full m-auto sm:mt-72 max-sm:border-none rounded-xl flex flex-col justify-center items-center'>
