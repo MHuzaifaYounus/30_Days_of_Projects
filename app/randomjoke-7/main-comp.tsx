@@ -6,12 +6,12 @@ import { useState, useEffect } from 'react'
 export default function Main() {
     const [joke, setJoke] = useState<string>('')
     interface Joke {
-        setup: String,
-        punchline: String,
+        setup: string,
+        punchline: string,
     }
     async function getJoke():Promise<void> {
-        let response = await fetch("https://official-joke-api.appspot.com/random_joke")
-        let data :Joke = await response.json()
+        const response = await fetch("https://official-joke-api.appspot.com/random_joke")
+        const data :Joke = await response.json()
         setJoke(data.setup + " - " + data.punchline)
     }
     useEffect(() => {

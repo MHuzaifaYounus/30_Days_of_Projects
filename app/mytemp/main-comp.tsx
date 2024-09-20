@@ -1,7 +1,5 @@
 "use client"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { useState, useEffect } from 'react'
 
 export default function Main() {
   
