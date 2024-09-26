@@ -30,12 +30,7 @@ export default function Main() {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [expenses, setExpenses] = useState<Expense[]>([
 
-        {
-            id: 0,
-            title: "Grocery",
-            amount: 0,
-            date: new Date()
-        }
+  
     ])
     function resetForm() {
         setExpenseDate(new Date())
