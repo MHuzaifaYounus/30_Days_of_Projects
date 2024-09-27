@@ -54,7 +54,7 @@ export default function Main() {
         setLoading(true)
         try {
 
-            const response = await fetch(`https://www.omdbapi.com/?t=${input}&apikey=${process.env.NEXT_PUBLIC_Movies_Api_Key}`)
+            const response = await fetch(`https://www.omdbapi.com/?t=${input}&apikey=fc1b56b8`)
             const data = await response.json()
             setLoading(false)
             console.log(data);
