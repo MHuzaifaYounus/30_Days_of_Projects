@@ -47,6 +47,7 @@ export default function Main() {
         console.log(textPosition);
     }, [textPosition])
     function memeClickHandler(memeUrl: string) {
+        setTextArray([])
         setEditingMeme(memeUrl)
     }
     function customtextHandler(e: ChangeEvent<HTMLTextAreaElement>) {
