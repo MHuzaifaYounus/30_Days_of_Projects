@@ -13,6 +13,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
+import { log } from 'node:console'
 
 
 export default function Main() {
@@ -25,10 +26,15 @@ export default function Main() {
         url: string,
         width: number,
     }
+    type Position = {
+        x: number,
+        y: number
+    }
     const [memes, setMemes] = useState<Meme[]>()
     const [editingMeme, setEditingMeme] = useState<string>('')
-    const [customText, setCustomText] = useState<string>()
-    const [textPosition, setTextPosition] = useState<{ x: number, y: number }>({ x: 0, y: -50 })
+    const [customText, setCustomText] = useState<string>('')
+    const [textPosition, setTextPosition] = useState<Position[]>([])
+    const [textArray, setTextArray] = useState<string[]>([])
     const memeRef = useRef<HTMLDivElement>()
     useEffect(() => {
         async function getdata() {
@@ -63,6 +69,11 @@ export default function Main() {
         }
 
     }
+    function addAnotherText() {
+        setTextArray(prevArray => [...prevArray, customText]);
+        setTextPosition(prevArray => [...prevArray, { x: 0, y: -50 }]);
+        setCustomText('')
+    }
     return (
         <Fragment>
             <Card className='w-[800px] max-sm:w-full m-auto sm:mt-12 max-sm:border-none rounded-xl flex flex-col justify-center items-center'>
@@ -95,6 +106,7 @@ export default function Main() {
                 <h1 className='text-center text-3xl pb-5 max-sm:w-[90%]'>Customize Your Meme</h1>
                 <p className='text-gray-600 text-xl text-center pb-4'>Drag the text to customize the position</p>
                 <div className='bg-muted overflow-hidden' ref={memeRef}>
+
                     <Image
                         src={editingMeme}
                         alt={"No Found"}
@@ -103,17 +115,30 @@ export default function Main() {
                         height={10}
                         className='object-cover'
                     />
-                    <Draggable position={textPosition} onStop={(_, data) => {
-                        setTextPosition({ x: data.x, y: data.y })
-                    }}>
-                        <div className='text-xl text-black font-extrabold cursor-pointer'
-                            style={{ left: textPosition.x, top: textPosition.y }}>
-                            {customText}
-                        </div>
-                    </Draggable>
+                    {textArray.map((text, index) => {
+                        return <Draggable
+                            key={index}
+                            position={textPosition[index]}
+                            onStop={(_, data) => {
+                                setTextPosition(prev => {
+                                    const updatedPositions = [...prev];
+                                    updatedPositions[index] = { x: data.x, y: data.y };
+                                    return updatedPositions;
+                                });
+                            }}
+                        >
+                            <div className='text-xl text-black font-extrabold cursor-pointer '
+                                style={{ left: textPosition[index].x, top: textPosition[index].y }}>
+                                {text}
+                            </div>
+                        </Draggable>
+                    })}
                 </div>
-                <Textarea className='mt-10 rounded-xl max-sm:w-[90%]' placeholder='Enter Your Text ' onChange={customtextHandler}></Textarea>
-                <Button variant='outline' className='rounded-xl mt-5 hover:bg-white hover:text-black' onClick={downloadHandler}>Download</Button>
+                <Textarea className='mt-10 rounded-xl max-sm:w-[90%]' placeholder='Enter Your Text ' value={customText} onChange={customtextHandler}></Textarea>
+                <div className='flex '>
+                    <Button variant='outline' className='rounded-xl mt-5 hover:bg-white hover:text-black' onClick={addAnotherText}>Add</Button>
+                    <Button variant='outline' className='rounded-xl mt-5 hover:bg-white hover:text-black ml-5' onClick={downloadHandler}>Download</Button>
+                </div>
             </div>}
         </Fragment>
     )
