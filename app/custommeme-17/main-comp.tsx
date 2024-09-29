@@ -13,7 +13,6 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
-import { log } from 'node:console'
 
 
 export default function Main() {
