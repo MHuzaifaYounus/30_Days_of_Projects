@@ -2,7 +2,7 @@
 const nextConfig = {
    
         images: {
-          domains: ['m.media-amazon.com'], // Add external domains here
+          domains: ['m.media-amazon.com',"i.imgflip.com"], // Add external domains here
         },
       
 };
