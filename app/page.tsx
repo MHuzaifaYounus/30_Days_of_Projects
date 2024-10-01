@@ -1,4 +1,10 @@
 
+import Globe from './globe';
+
 export default function Home() {
-  return <div></div>
+  return (
+    <div className="h-screen w-screen bg-black">
+      <Globe />
+    </div>
+  );
 }
