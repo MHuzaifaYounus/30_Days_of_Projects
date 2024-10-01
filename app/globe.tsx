@@ -2,7 +2,7 @@
 "use client";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Sphere, Html, Stars } from "@react-three/drei";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import * as THREE from "three";
 
@@ -17,20 +17,25 @@ interface Point {
 const RotatingGlobe = ({ points }: { points: Point[] }) => {
   const router = useRouter();
   const handleClick = (projectLink: string) => {
-    
+
     router.push(projectLink); // Redirect to the project
   };
   const globeRef = useRef<THREE.Group>(null);
-
+  const [globeRadius, setGlobeRadius] = useState<number>(3)
   // Auto-rotate the globe
   useFrame(() => {
     if (globeRef.current) {
       globeRef.current.rotation.y += 0.002; // Adjust speed (lower value for slower rotation)
     }
   });
+  useEffect(() => {
+      if(screen.width <= 700){
+        setGlobeRadius(1.4)
+      }
+   },[])
 
   // Convert lat/lon to 3D coordinates on the globe
-  const convertLatLonToXYZ = (lat: number, lon: number, radius: number = 3) => {
+  const convertLatLonToXYZ = (lat: number, lon: number, radius: number = globeRadius) => {
     const phi = (90 - lat) * (Math.PI / 180);
     const theta = (lon + 180) * (Math.PI / 180);
     const x = -(radius * Math.sin(phi) * Math.cos(theta));
@@ -42,7 +47,7 @@ const RotatingGlobe = ({ points }: { points: Point[] }) => {
   return (
     <group ref={globeRef}>
       {/* Globe itself */}
-      <Sphere args={[3, 64, 64]}>
+      <Sphere args={[globeRadius, 64, 64]}>
         <meshStandardMaterial
           attach="material"
           color="#1E90FF" // A soft blue shade
@@ -86,7 +91,7 @@ const RotatingGlobe = ({ points }: { points: Point[] }) => {
 };
 
 const Globe = () => {
-  
+
   // Data for points
   const points: Point[] = [
     { id: 1, lat: 10, lon: 20, projectLink: "/stopwatch-1" },
@@ -108,8 +113,6 @@ const Globe = () => {
     { id: 17, lat: 25, lon: -40, projectLink: "/custommeme-17" },
     // Add more projects later...
   ];
-
- 
 
   return (
     <div style={{ height: "100vh", width: "100vw", background: "#001122" }}>
