@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
 export default function Main() {
-    const [exchangeRates, setExchangeRates] = useState<Object>()
+    const [exchangeRates, setExchangeRates] = useState<{[currency:string]:number}>()
     const [inputAmount, setInputAmount] = useState<number>()
     const [result, setResult] = useState<number>(0.00)
     const [fromCurrency, setFromCurrency] = useState<string>()
