@@ -111,6 +111,8 @@ const Globe = () => {
     { id: 15, lat: 45, lon: -80, projectLink: "/expensetracker-15" },
     { id: 16, lat: -50, lon: 160, projectLink: "/moviesearch-16" },
     { id: 17, lat: 25, lon: -40, projectLink: "/custommeme-17" },
+    { id: 18, lat: 57, lon: -24, projectLink: "/currencyconverter-18" },
+    { id: 19, lat: 46, lon: -20, projectLink: "/githubprofileviewer-19" },
     // Add more projects later...
   ];
 
