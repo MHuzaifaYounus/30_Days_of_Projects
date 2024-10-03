@@ -30,7 +30,7 @@ export default function Main() {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [expenses, setExpenses] = useState<Expense[]>([
 
-  
+
     ])
     function resetForm() {
         setExpenseDate(new Date())
@@ -93,49 +93,50 @@ export default function Main() {
     function expenseAmountHandler(e: ChangeEvent<HTMLInputElement>) {
         setExpnseAmount(Number(e.target.value))
     }
-    return (<>
-        <div className='w-full'>
-            <div className='bg-green-900 flex justify-between items-center text-3xl max-sm:text-2xl font-bold p-3'>
-                <h1>Expense Tracker</h1>
-                <h1>Total:${mainAmount}</h1>
-            </div>
-            <div className='flex flex-col justify-center items-center'>
-                {expenses.map((expense) => {
-                    return <div key={expense.id} className='w-[90%] border text-4xl max-sm:text-2xl p-5 max-sm:p-3 mt-8 rounded-xl flex justify-between items-center'>
-                        <div>
-                            <h1>{expense.title}</h1>
-                            <p className='text-sm max-sm:text-[0.8rem] pl-2 text-gray-400'>{expense.date.toISOString().slice(0, 10)}</p>
-                        </div>
-                        <div className='flex justify-between items-center'>
-                            <h1>${expense.amount}</h1>
-                            <FilePenIcon className='ml-4 scale-75 cursor-pointer text-gray-500 hover:text-white' onClick={() => { editHandler(expense.date, expense.amount, expense.title, expense.id) }}></FilePenIcon>
-                            <TrashIcon className='ml-4 scale-75 cursor-pointer text-gray-500 hover:text-white' onClick={() => { delHandler(expense.amount, expense.id) }}></TrashIcon>
+    return (
+        <>
+            <div className='w-full'>
+                <div className='bg-green-900 flex justify-between items-center text-3xl max-sm:text-2xl font-bold p-3'>
+                    <h1>Expense Tracker</h1>
+                    <h1>Total:${mainAmount}</h1>
+                </div>
+                <div className='flex flex-col justify-center items-center'>
+                    {expenses.map((expense) => {
+                        return <div key={expense.id} className='w-[90%] border text-4xl max-sm:text-2xl p-5 max-sm:p-3 mt-8 rounded-xl flex justify-between items-center'>
+                            <div>
+                                <h1>{expense.title}</h1>
+                                <p className='text-sm max-sm:text-[0.8rem] pl-2 text-gray-400'>{expense.date.toISOString().slice(0, 10)}</p>
+                            </div>
+                            <div className='flex justify-between items-center'>
+                                <h1>${expense.amount}</h1>
+                                <FilePenIcon className='ml-4 scale-75 cursor-pointer text-gray-500 hover:text-white' onClick={() => { editHandler(expense.date, expense.amount, expense.title, expense.id) }}></FilePenIcon>
+                                <TrashIcon className='ml-4 scale-75 cursor-pointer text-gray-500 hover:text-white' onClick={() => { delHandler(expense.amount, expense.id) }}></TrashIcon>
+
+                            </div>
 
                         </div>
-
-                    </div>
-                })}
+                    })}
+                </div>
             </div>
-        </div>
-        <Dialog open={showModal} onOpenChange={setShowModal}>
-            <DialogTrigger className='rounded-full absolute bottom-3 right-4 font-extrabold text-xl cursor-pointer hover:bg-green-700 border pt-2 pb-2 pl-4 pr-4'>
-                +
-            </DialogTrigger>
-            <DialogContent >
-                <DialogHeader >
-                    <DialogTitle className='text-center text-xl'>Add Expense</DialogTitle>
-                </DialogHeader>
+            <Dialog open={showModal} onOpenChange={setShowModal}>
+                <DialogTrigger className='rounded-full absolute bottom-3 right-4 font-extrabold text-xl cursor-pointer hover:bg-green-700 border pt-2 pb-2 pl-4 pr-4'>
+                    +
+                </DialogTrigger>
+                <DialogContent >
+                    <DialogHeader >
+                        <DialogTitle className='text-center text-xl'>Add Expense</DialogTitle>
+                    </DialogHeader>
 
-                <Label>Title:</Label>
-                <Input type='text' className='rounded-xl' value={expenseTitle} onChange={expenseTitleHandler}></Input>
-                <Label>Amount:</Label>
-                <Input type='number' className='rounded-xl' value={expnseAmount} onChange={expenseAmountHandler}></Input>
-                <Label>Date:</Label>
-                <Input type='date' className='rounded-xl text-black invert' value={expenseDate.toISOString().slice(0, 10)} onChange={dateHandler}></Input>
-                <Button variant='outline' className='rounded-xl w-16 mt-5 hover:bg-green-800' onClick={isEditing ? saveHandler : addBtnHandler}>{isEditing ? "Save" : "Add"}</Button>
+                    <Label>Title:</Label>
+                    <Input type='text' className='rounded-xl' value={expenseTitle} onChange={expenseTitleHandler}></Input>
+                    <Label>Amount:</Label>
+                    <Input type='number' className='rounded-xl' value={expnseAmount} onChange={expenseAmountHandler}></Input>
+                    <Label>Date:</Label>
+                    <Input type='date' className='rounded-xl text-black invert' value={expenseDate.toISOString().slice(0, 10)} onChange={dateHandler}></Input>
+                    <Button variant='outline' className='rounded-xl w-16 mt-5 hover:bg-green-800' onClick={isEditing ? saveHandler : addBtnHandler}>{isEditing ? "Save" : "Add"}</Button>
 
-            </DialogContent>
-        </Dialog>
-    </>
+                </DialogContent>
+            </Dialog>
+        </>
     )
 }
