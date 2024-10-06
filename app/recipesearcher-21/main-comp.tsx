@@ -30,7 +30,7 @@ export default function Main() {
             seterror("please Enter a Valid Dish")
         }
         try{
-            const response = await fetch(`https://api.edamam.com/search?q=${input}&app_id=${process.env.NEXT_PUBLIC_EDAMAM_APP_ID}&app_key=${process.env.NEXT_PUBLIC_EDAMAM_APP_KEY}`)
+            const response = await fetch(`https://api.edamam.com/search?q=${input}&app_id=${process.env.NEXT_EDAMAM_APP_ID}&app_key=${process.env.NEXT_EDAMAM_APP_KEY}`)
             const data = await response.json()
             if(!data){
                 seterror("No Recipe Found")
