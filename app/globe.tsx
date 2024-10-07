@@ -1,4 +1,3 @@
-// components/Globe.tsx
 "use client";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Sphere, Html, Stars } from "@react-three/drei";
@@ -6,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import * as THREE from "three";
 
-// Define the Point interface
 interface Point {
   id: number;
   lat: number;
@@ -16,23 +14,26 @@ interface Point {
 
 const RotatingGlobe = ({ points }: { points: Point[] }) => {
   const router = useRouter();
-  const handleClick = (projectLink: string) => {
-
-    router.push(projectLink); // Redirect to the project
-  };
+  const [isHovering, setIsHovering] = useState(false); // State to track if a point is hovered
   const globeRef = useRef<THREE.Group>(null);
-  const [globeRadius, setGlobeRadius] = useState<number>(3)
-  // Auto-rotate the globe
+  const [globeRadius, setGlobeRadius] = useState<number>(3);
+
+  // Auto-rotate the globe unless hovering over a point
   useFrame(() => {
-    if (globeRef.current) {
+    if (globeRef.current && !isHovering) {
       globeRef.current.rotation.y += 0.002; // Adjust speed (lower value for slower rotation)
     }
   });
+
+  const handleClick = (projectLink: string) => {
+    router.push(projectLink); // Redirect to the project
+  };
+
   useEffect(() => {
-      if(screen.width <= 700){
-        setGlobeRadius(1.4)
-      }
-   },[])
+    if (screen.width <= 700) {
+      setGlobeRadius(1.4);
+    }
+  }, []);
 
   // Convert lat/lon to 3D coordinates on the globe
   const convertLatLonToXYZ = (lat: number, lon: number, radius: number = globeRadius) => {
@@ -50,16 +51,16 @@ const RotatingGlobe = ({ points }: { points: Point[] }) => {
       <Sphere args={[globeRadius, 64, 64]}>
         <meshStandardMaterial
           attach="material"
-          color="#1E90FF" // A soft blue shade
-          emissive="#112233" // Add an emissive glow
-          emissiveIntensity={0.5} // Controls glow intensity
-          roughness={2} // Gives a matte finish
-          metalness={4} // Slight metallic effect for a sleek look
+          color="#1E90FF"
+          emissive="#112233"
+          emissiveIntensity={0.5}
+          roughness={2}
+          metalness={4}
           wireframe={true}
         />
       </Sphere>
 
-      {/* Points on the globe, rotating with the globe */}
+      {/* Points on the globe */}
       {points.map((point) => {
         const [x, y, z] = convertLatLonToXYZ(point.lat, point.lon);
 
@@ -68,6 +69,14 @@ const RotatingGlobe = ({ points }: { points: Point[] }) => {
             key={point.id}
             position={[x, y, z]}
             onClick={() => handleClick(point.projectLink)}
+            onPointerOver={() => {
+              setIsHovering(true);
+              document.body.style.cursor = "pointer"; // Set cursor to pointer on hover
+            }}
+            onPointerOut={() => {
+              setIsHovering(false);
+              document.body.style.cursor = "auto"; // Revert cursor when not hovering
+            }}
           >
             <sphereGeometry args={[0.03, 16, 16]} />
             <meshStandardMaterial color="white" />
@@ -79,6 +88,7 @@ const RotatingGlobe = ({ points }: { points: Point[] }) => {
                 textAlign: "center",
                 color: "white",
                 fontSize: "0.8rem",
+                cursor: "pointer",
               }}
             >
               {`Project ${point.id}`}
@@ -91,8 +101,6 @@ const RotatingGlobe = ({ points }: { points: Point[] }) => {
 };
 
 const Globe = () => {
-
-  // Data for points
   const points: Point[] = [
     { id: 1, lat: 10, lon: 20, projectLink: "/stopwatch-1" },
     { id: 2, lat: -10, lon: 50, projectLink: "/weatherapp-2" },
@@ -115,23 +123,17 @@ const Globe = () => {
     { id: 19, lat: 46, lon: -20, projectLink: "/githubprofileviewer-19" },
     { id: 20, lat: 54, lon: 24, projectLink: "/notesmaker-20" },
     { id: 21, lat: 73, lon: 90, projectLink: "/recipesearcher-21" },
-    // Add more projects later...
+    { id: 22, lat: 34, lon: 22, projectLink: "/wordcounter-22" },
+    { id: 23, lat: 84, lon: 64, projectLink: "/imageslider-23" },
   ];
 
   return (
     <div style={{ height: "100vh", width: "100vw", background: "#001122" }}>
       <Canvas>
-        {/* Background star field for a space-like effect */}
         <Stars radius={100} depth={50} count={5000} factor={4} fade />
-
-        {/* Lighting for the globe */}
         <ambientLight intensity={0.4} />
         <pointLight position={[10, 10, 10]} intensity={0.8} />
-
-        {/* Rotating Globe with Points */}
         <RotatingGlobe points={points} />
-
-        {/* Controls to rotate the globe */}
         <OrbitControls enableZoom={true} />
       </Canvas>
     </div>
