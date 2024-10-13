@@ -127,6 +127,7 @@ const Globe = () => {
     { id: 23, lat: 84, lon: 64, projectLink: "/imageslider-23" },
     { id: 24, lat: 58, lon: 58, projectLink: "/quizapp-24" },
     { id: 25, lat: 28, lon: 78, projectLink: "/advancedstopwatch-25" },
+    { id: 26, lat: 37, lon: 47, projectLink: "/snakegame-26" },
   ];
 
   return (
